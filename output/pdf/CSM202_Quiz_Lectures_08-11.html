@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CSM202 Quiz - Lectures 08-11</title>
+<style>
+@page { size: A4; margin: 17mm 18mm 17mm 18mm; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #182536; font: 11pt/1.42 Arial, Helvetica, sans-serif; }
+.page { height: 263mm; position: relative; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.topline { height: 5px; background: #e98224; margin-bottom: 15px; }
+h1 { font-size: 21pt; margin: 0 0 3px; color: #153451; letter-spacing: .2px; }
+.subtitle { font-size: 11pt; color: #4e6172; margin-bottom: 15px; }
+.meta { border: 1px solid #bac6cf; padding: 10px 12px; margin: 12px 0; }
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+.blank { display: inline-block; min-width: 70%; border-bottom: 1px solid #768693; height: 17px; vertical-align: bottom; }
+.instructions { background: #f2f6f8; border-left: 3px solid #e98224; padding: 8px 11px; margin: 11px 0 14px; }
+.q { margin: 0 0 13px; break-inside: avoid; }
+.qhead { font-weight: bold; color: #153451; margin-bottom: 4px; }
+.marks { float: right; color: #4e6172; font-weight: normal; }
+.part { margin: 3px 0 3px 20px; }
+.work { border-bottom: 1px solid #d4dce1; height: 22px; margin-top: 2px; }
+.work.short { height: 18px; }
+.workarea { margin: 6px 0 4px 18px; }
+.footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid #d4dce1; padding-top: 6px; color: #667784; font-size: 9pt; display: flex; justify-content: space-between; }
+.section { font-weight: bold; font-size: 12pt; color: #153451; margin: 3px 0 13px; border-bottom: 1px solid #cad4da; padding-bottom: 6px; }
+.carry { color: #667784; font-size: 9pt; }
+</style>
+</head>
+<body>
+<section class="page">
+ <div class="topline"></div>
+ <h1>CSM202 | QUIZ</h1>
+ <div class="subtitle">Statistical Inference and Regression Analysis · Lectures 08-11</div>
+ <div class="meta"><div class="meta-grid"><div>Name: <span class="blank"></span></div><div>Student ID: <span class="blank"></span></div><div>Class/Section: <span class="blank"></span></div><div>Date: <span class="blank"></span></div></div></div>
+ <div class="instructions"><b>Total: 40 marks</b> &nbsp;|&nbsp; <b>Suggested time: 60 minutes</b><br>Answer all eight questions. Show your working for numerical questions and state conclusions in context. Unless a question specifies otherwise, use a 5% significance level.</div>
+ <div class="section">Part I · Sampling and One-Sample Inference</div>
+ <div class="q"><div class="qhead">1. Sampling distribution <span class="marks">[5 marks]</span></div> A population has mean 72 and standard deviation 16. A random sample of 64 observations is selected. Assume the sampling distribution of the sample mean is approximately normal.<div class="part">(a) State the mean and standard error of the sampling distribution of the sample mean. (2)</div><div class="part">(b) Find the probability that the sample mean exceeds 76. Show the standardisation used. (3)</div><div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="q"><div class="qhead">2. Confidence interval <span class="marks">[5 marks]</span></div> A sample of 50 observations has mean 18.4 and sample standard deviation 4.2. Construct a 95% confidence interval for the population mean using the normal critical value 1.96. Show the standard error and margin of error, then interpret the interval in context.<div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="q"><div class="qhead">3. One-sample test for a mean <span class="marks">[5 marks]</span></div> A manufacturer claims that the mean fill volume is 500 ml. A random sample of 36 containers has mean 512 ml. The population standard deviation is known to be 30 ml. At the 5% significance level, test whether the population mean differs from 500 ml. State the hypotheses, calculate the test statistic, give the decision rule or p-value, and state your conclusion.<div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="footer"><span>CSM202 · Quiz · Lectures 08-11</span><span>Page 1 of 3</span></div>
+</section>
+<section class="page">
+ <div class="topline"></div><div class="section">Part II · Hypothesis Testing and Analysis of Variance</div>
+ <div class="q"><div class="qhead">4. Hypothesis-testing decisions <span class="marks">[5 marks]</span></div> A researcher conducts a hypothesis test at significance level α = 0.05.<div class="part">(a) Explain what a Type I error means in this setting. (2)</div><div class="part">(b) Explain what a Type II error means. (2)</div><div class="part">(c) State the relationship between the significance level and the probability of a Type I error. (1)</div><div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="q"><div class="qhead">5. Two-sample test for means <span class="marks">[5 marks]</span></div> Two independent groups produce the following summaries: Group A, n = 25, mean = 82, standard deviation = 8; Group B, n = 25, mean = 76, standard deviation = 10. Assume independent normal populations with equal variances. Test at the 5% level whether the population means differ. State H₀ and H₁, calculate the pooled-variance t statistic and degrees of freedom, and give a conclusion. Use a two-sided critical value of 2.01.<div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="q"><div class="qhead">6. One-way ANOVA <span class="marks">[5 marks]</span></div> A one-way ANOVA compares the mean outcomes of four teaching methods. The calculated F statistic is 4.80 and the critical value at the chosen significance level is 3.20.<div class="part">(a) State the null and alternative hypotheses in terms of the four population means. (2)</div><div class="part">(b) Identify the test decision and explain what it means about the group means. (2)</div><div class="part">(c) Explain why a significant ANOVA result does not by itself identify which specific methods differ. (1)</div><div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="footer"><span>CSM202 · Quiz · Lectures 08-11</span><span>Page 2 of 3</span></div>
+</section>
+<section class="page">
+ <div class="topline"></div><div class="section">Part III · Regression Analysis</div>
+ <div class="q"><div class="qhead">7. Interpreting a fitted regression line <span class="marks">[5 marks]</span></div> A fitted regression model is ŷ = 12 + 2.5x, where x is the number of hours studied and y is the predicted quiz score.<div class="part">(a) Interpret the slope in context. (2)</div><div class="part">(b) Predict the score for a student who studied for 8 hours. (1)</div><div class="part">(c) For a student who studied for 8 hours and scored 34, calculate the residual using residual = observed − predicted. Interpret its sign. (2)</div><div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div class="q"><div class="qhead">8. OLS, gradient descent, and mean squared error <span class="marks">[5 marks]</span></div><div class="part">(a) State the quantity that ordinary least squares (OLS) minimises when fitting a regression model. (2)</div><div class="part">(b) Describe how gradient descent updates model parameters and explain the role of the learning rate. (2)</div><div class="part">(c) Write the formula for mean squared error (MSE) for n observed values yᵢ and predictions ŷᵢ. (1)</div><div class="workarea"><div class="work"></div><div class="work"></div><div class="work"></div><div class="work"></div></div></div>
+ <div style="margin-top:16px;text-align:center;color:#667784;font-size:10pt">End of quiz</div>
+ <div class="footer"><span>CSM202 · Quiz · Lectures 08-11</span><span>Page 3 of 3</span></div>
+</section>
+</body>
+</html>

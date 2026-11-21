@@ -1,0 +1,2 @@
+[16532:5984:1114/223343.719:ERROR:chrome\installer\util\google_update_settings_win.cc:270] Failed opening key Software\Google\Update\ClientStateMedium\{8A69D345-D564-463c-AFF1-A69D9E530F96} to set usagestats; result: 5
+59111 bytes written to file C:\Users\ASUS\OneDrive\Desktop\Cyber Prj\.tmp-doc\new-assignment-review\figure-audit.png

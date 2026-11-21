@@ -1,0 +1,162 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3635 >>
+stream
+0.910 0.450 0.120 rg
+54 788 487 5 re f
+BT /F2 21 Tf 0.080 0.200 0.320 rg 54 764 Td (CSM202 | QUIZ) Tj ET
+BT /F1 10 Tf 0.340 0.410 0.470 rg 54 745 Td (Statistical Inference and Regression Analysis - Lectures 08-11) Tj ET
+0.72 0.78 0.82 RG 0.7 w 54 723 m 541 723 l S
+BT /F1 9 Tf 54 702 Td (Name: ____________________________) Tj 282 0 Td (Student ID: __________________) Tj ET
+BT /F1 9 Tf 54 682 Td (Class/Section: ____________________) Tj 282 0 Td (Date: ________________________) Tj ET
+0.95 0.97 0.98 rg 54 627 487 34 re f
+BT /F2 9 Tf 0.080 0.200 0.320 rg 63 647 Td (TOTAL: 40 MARKS    |    SUGGESTED TIME: 60 MINUTES) Tj ET
+BT /F1 8.5 Tf 0.080 0.200 0.320 rg 63 634 Td (Answer all eight questions. Show working for numerical questions and state conclusions in context.) Tj ET
+BT /F1 8.5 Tf 0.080 0.200 0.320 rg 63 623 Td (Unless specified otherwise, use a 5% significance level.) Tj ET
+BT /F2 12 Tf 0.080 0.200 0.320 rg 54 601 Td (PART I - SAMPLING AND ONE-SAMPLE INFERENCE) Tj ET
+0.78 0.82 0.85 RG 0.6 w 54 592 m 541 592 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 572 Td (Question 1. Sampling distribution) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 557 Td (A population has mean 72 and standard deviation 16. A random sample of 64 observations is selected.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 545 Td (   Assume the sampling distribution of the sample mean is approximately normal.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 531 Td (    \(a\) State the mean and standard error of the sampling distribution of the sample mean. \(2) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 519 Td (       marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 505 Td (    \(b\) Find the probability that the sample mean exceeds 76. Show the standardisation used. \(3) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 493 Td (       marks\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 477 m 541 477 l S
+0.82 0.86 0.88 RG 0.5 w 72 459 m 541 459 l S
+0.82 0.86 0.88 RG 0.5 w 72 441 m 541 441 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 415 Td (Question 2. Confidence interval) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 400 Td (A sample of 50 observations has mean 18.4 and sample standard deviation 4.2. Construct a 95%) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 388 Td (   confidence interval for the population mean using the normal critical value 1.96. Show the standard) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 376 Td (   error and margin of error, then interpret the interval in context. \(5 marks\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 360 m 541 360 l S
+0.82 0.86 0.88 RG 0.5 w 72 342 m 541 342 l S
+0.82 0.86 0.88 RG 0.5 w 72 324 m 541 324 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 298 Td (Question 3. One-sample test for a mean) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 283 Td (A manufacturer claims that the mean fill volume is 500 ml. A random sample of 36 containers has) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 271 Td (   mean 512 ml. The population standard deviation is known to be 30 ml. At the 5% significance level,) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 259 Td (   test whether the population mean differs from 500 ml. State the hypotheses, calculate the test) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 247 Td (   statistic, give the decision rule or p-value, and state your conclusion. \(5 marks\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 231 m 541 231 l S
+0.82 0.86 0.88 RG 0.5 w 72 213 m 541 213 l S
+0.82 0.86 0.88 RG 0.5 w 72 195 m 541 195 l S
+0.82 0.86 0.88 RG 0.6 w 54 39 m 541 39 l S
+BT /F1 8 Tf 0.340 0.410 0.470 rg 54 25 Td (CSM202 - Quiz - Lectures 08-11) Tj 411 0 Td (Page 1 of 3) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3201 >>
+stream
+0.910 0.450 0.120 rg
+54 788 487 5 re f
+BT /F2 12 Tf 0.080 0.200 0.320 rg 54 764 Td (PART II - HYPOTHESIS TESTING AND ANALYSIS OF VARIANCE) Tj ET
+0.78 0.82 0.85 RG 0.6 w 54 755 m 541 755 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 735 Td (Question 4. Hypothesis-testing decisions) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 720 Td (A researcher conducts a hypothesis test at significance level alpha = 0.05.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 706 Td (    \(a\) Explain what a Type I error means in this setting. \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 692 Td (    \(b\) Explain what a Type II error means. \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 678 Td (    \(c\) State the relationship between the significance level and the probability of a Type I) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 666 Td (       error. \(1 mark\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 650 m 541 650 l S
+0.82 0.86 0.88 RG 0.5 w 72 632 m 541 632 l S
+0.82 0.86 0.88 RG 0.5 w 72 614 m 541 614 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 588 Td (Question 5. Two-sample test for means) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 573 Td (Two independent groups have these summaries: Group A, n = 25, mean = 82, standard deviation = 8;) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 561 Td (   Group B, n = 25, mean = 76, standard deviation = 10. Assume independent normal populations with) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 549 Td (   equal variances. Test at the 5% level whether the population means differ. State H0 and H1,) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 537 Td (   calculate the pooled-variance t statistic and degrees of freedom, and give a conclusion. Use a) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 525 Td (   two-sided critical value of 2.01. \(5 marks\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 509 m 541 509 l S
+0.82 0.86 0.88 RG 0.5 w 72 491 m 541 491 l S
+0.82 0.86 0.88 RG 0.5 w 72 473 m 541 473 l S
+0.82 0.86 0.88 RG 0.5 w 72 455 m 541 455 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 429 Td (Question 6. One-way ANOVA) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 414 Td (A one-way ANOVA compares mean outcomes for four teaching methods. The calculated F statistic is) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 402 Td (   4.80 and the critical value is 3.20.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 388 Td (    \(a\) State the null and alternative hypotheses in terms of the four population means. \(2) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 376 Td (       marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 362 Td (    \(b\) Identify the test decision and explain what it means about the group means. \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 348 Td (    \(c\) Explain why a significant ANOVA result does not identify which specific methods differ.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 336 Td (       \(1 mark\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 320 m 541 320 l S
+0.82 0.86 0.88 RG 0.5 w 72 302 m 541 302 l S
+0.82 0.86 0.88 RG 0.5 w 72 284 m 541 284 l S
+0.82 0.86 0.88 RG 0.6 w 54 39 m 541 39 l S
+BT /F1 8 Tf 0.340 0.410 0.470 rg 54 25 Td (CSM202 - Quiz - Lectures 08-11) Tj 411 0 Td (Page 2 of 3) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2402 >>
+stream
+0.910 0.450 0.120 rg
+54 788 487 5 re f
+BT /F2 12 Tf 0.080 0.200 0.320 rg 54 764 Td (PART III - REGRESSION ANALYSIS) Tj ET
+0.78 0.82 0.85 RG 0.6 w 54 755 m 541 755 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 735 Td (Question 7. Interpreting a fitted regression line) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 720 Td (A fitted regression model is yhat = 12 + 2.5x, where x is hours studied and y is the predicted quiz) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 708 Td (   score.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 694 Td (    \(a\) Interpret the slope in context. \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 680 Td (    \(b\) Predict the score for a student who studied for 8 hours. \(1 mark\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 666 Td (    \(c\) A student who studied 8 hours scored 34. Calculate the residual using residual =) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 72 654 Td (       observed - predicted, and interpret its sign. \(2 marks\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 638 m 541 638 l S
+0.82 0.86 0.88 RG 0.5 w 72 620 m 541 620 l S
+0.82 0.86 0.88 RG 0.5 w 72 602 m 541 602 l S
+0.82 0.86 0.88 RG 0.5 w 72 584 m 541 584 l S
+BT /F2 9.5 Tf 0.080 0.200 0.320 rg 54 558 Td (Question 8. OLS, gradient descent, and mean squared error) Tj 440 0 Td ([5 marks]) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 543 Td (\(a\) State the quantity that ordinary least squares \(OLS\) minimises when fitting a regression model.) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 531 Td (   \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 517 Td (\(b\) Describe how gradient descent updates model parameters and explain the role of the learning) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 505 Td (   rate. \(2 marks\)) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 491 Td (\(c\) Write the formula for mean squared error \(MSE\) for n observed values y_i and predictions) Tj ET
+BT /F1 8.8 Tf 0.10 0.15 0.19 rg 54 479 Td (   yhat_i. \(1 mark\)) Tj ET
+0.82 0.86 0.88 RG 0.5 w 72 463 m 541 463 l S
+0.82 0.86 0.88 RG 0.5 w 72 445 m 541 445 l S
+0.82 0.86 0.88 RG 0.5 w 72 427 m 541 427 l S
+0.82 0.86 0.88 RG 0.5 w 72 409 m 541 409 l S
+0.82 0.86 0.88 RG 0.5 w 72 391 m 541 391 l S
+BT /F1 8 Tf 0.340 0.410 0.470 rg 220 116 Td (END OF QUIZ) Tj ET
+0.82 0.86 0.88 RG 0.6 w 54 39 m 541 39 l S
+BT /F1 8 Tf 0.340 0.410 0.470 rg 54 25 Td (CSM202 - Quiz - Lectures 08-11) Tj 411 0 Td (Page 3 of 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000134 00000 n 
+0000000204 00000 n 
+0000000279 00000 n 
+0000003966 00000 n 
+0000004102 00000 n 
+0000007355 00000 n 
+0000007491 00000 n 
+0000009945 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+10082
+%%EOF

@@ -1,0 +1,106 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 Aptos;}{\f1 Consolas;}}{\colortbl;\red16\green42\blue67;\red253\green243\blue215;\red71\green116\blue170;}\paperw12240\paperh15840\margl1080\margr1080\margt900\margb900\viewkind4\widowctrl
+\pard\sb1800\sa240\qc\fs54\cf1\b Secure Student Club Registration\b0\par
+\pard\sa240\qc\fs32\cf3 ELE201 Secure Coding Project Documentation\par
+\pard\sa550\qc\fs22 Individual Project and Security Implementation Report\par
+\pard\sa180\qc\fs22 Student: Dawa\par\pard\sa180\qc\fs22 Student ID: 12240028\par\pard\sa180\qc\fs22 Date: 12 November 2026\par\pard\sa500\qc\fs20 Local demo: http://127.0.0.1:3000\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Purpose: This report answers the ELE201 documentation requirements by describing the implemented application, mapping security controls to source code, and identifying evidence still needed. The developer-provided PowerShell output shows the local health endpoint returned HTTP 200. That confirms server reachability only; login and the full security test set still need verification.\par
+\page
+\pard\sb260\sa100\keepn\fs32\cf1\b A. Application Overview\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 The Secure Student Club Registration and Membership Management System replaces informal club sign-up with a web workflow. Students register, sign in, browse clubs, submit membership applications, and view pending, approved, or rejected decisions. Club administrators review applications, approve or reject pending requests, create and edit club listings, set member capacity, and view approved members.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 The two roles are Student and Club Administrator. Students can browse clubs and access only their own applications. Administrators can review requests and maintain club information. Express checks authorization on the server for each restricted API route.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Technologies: Node.js, Express, SQLite, HTML, CSS, browser JavaScript, bcryptjs, express-session with a SQLite store, Node crypto (AES-256-GCM and HMAC), Zod, Helmet, express-rate-limit, and Winston.\par
+\pard\sb260\sa100\keepn\fs32\cf1\b Main features 2\b0\cf0\fs20\par
+\pard\li360\fi-220\sa65\fs20\cf0\bullet\tab Student registration, login, logout, club browsing, membership applications, and status tracking.\par
+\pard\li360\fi-220\sa65\fs20\cf0\bullet\tab Administrator review of applications, club creation and editing, member capacity settings, and approved-member list.\par
+\pard\li360\fi-220\sa65\fs20\cf0\bullet\tab Encrypted student identity fields, server-side role checks, validated inputs, CSRF protection, secure session configuration, and structured security logs.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Scope note: profile editing, password reset, email verification, per-club administrator assignment, automated backups, and production deployment are not implemented in this version.\par
+\pard\sb260\sa100\keepn\fs32\cf1\b Cyber flow 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Browser -> Helmet and Express middleware -> session and CSRF checks -> Zod validation -> role authorization -> parameterized SQLite operation -> AES-GCM decryption only for an authorized admin response -> JSON response -> escaped browser rendering. Winston records important events. Registration hashes passwords with bcrypt and encrypts student PII before storage. Login compares the bcrypt hash and rotates the session ID.\par
+\pard\sb260\sa100\keepn\fs32\cf1\b Run configuration 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Install dependencies with npm install, keep .env private, and start with npm start. On the same computer, open http://127.0.0.1:3000. The health endpoint is http://127.0.0.1:3000/api/health. Local development uses HTTP and is not HTTPS evidence.\par
+\page
+\pard\sb260\sa100\keepn\fs32\cf1\b B. Security Implementation Details\b0\cf0\fs20\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 1. Authentication and authorization 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Passwords are stored as bcrypt hashes using cost 12. Registration and login validate values on the server. Login uses a generic error for unknown email or incorrect password and is rate-limited. Successful registration and login regenerate the session ID. The auth middleware requires a signed-in session; the role middleware requires admin for admin endpoints. Student application queries are scoped to the session user.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Source references: server.js registration/login handlers, bcrypt.hash and bcrypt.compare, auth and role middleware, /api/applications, and /api/admin routes. Passwords are not stored or logged in plaintext.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 1 - Registration and sign-in pages\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture both forms in a browser using test data. Keep the browser address bar visible and do not show real student details.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 2 - bcrypt hashing and server-side RBAC\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture bcrypt code, auth/role middleware, and a student request to an administrator endpoint returning 403.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 2. Data encryption and protection 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Names, emails, and student IDs are encrypted with AES-256-GCM using a random 12-byte IV and an authentication tag. The 32-byte key is read from DATA_ENCRYPTION_KEY in .env. A keyed HMAC of normalized email supports lookup without a plaintext email index. Passwords use bcrypt. SQL values use bound parameters.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Selected identity fields are encrypted at rest; this does not encrypt the whole SQLite file, logs, backups, or host filesystem. Losing the key makes those encrypted values unrecoverable. Key rotation requires migration. Never include secret values in screenshots or a repository.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 3 - AES-GCM protection at rest\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture encryption/decryption code and a database row showing ciphertext and a password hash. Redact the key and personal data.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 3. Input validation and output sanitization 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Zod schemas enforce types, formats, length bounds, numeric ranges, and allowed status values on the server. Request bodies are limited to 20 KB. Prepared SQL statements prevent input from changing query structure. Browser code escapes HTML-significant characters before inserting dynamic text. Helmet CSP limits script and style sources to the local origin and blocks object embedding.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 HTML input constraints provide usability but are not the security boundary; server validation is. This version uses contextual HTML encoding in its render helper and does not include a separate DOMPurify package.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 4 - Validation, parameterized queries, CSP, and output encoding\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture Zod schemas, a prepared query, the escape helper, and an invalid-input response with a safe message.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 4. Session management 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Sessions are stored in SQLite with a 30-minute rolling expiry. Login and registration regenerate the session identifier. Cookies use HttpOnly and SameSite=Strict. Secure is enabled when direct TLS is configured or NODE_ENV is production. State-changing routes require a random session-bound CSRF token. Logout destroys the server-side session and clears the cookie.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 The current local environment uses HTTP, so it does not demonstrate the Secure cookie attribute. Capture cookie flags only after using HTTPS.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 5 - Session expiration, cookie flags, CSRF, and logout\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture session configuration, the CSRF request, cookie flags on HTTPS, and a logged-out API request returning 401. Redact cookie values.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 5. Error handling and logging 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Asynchronous route errors go to a central handler that returns a generic message instead of stack traces or database details. Winston writes timestamped JSON events to logs/security.log and the console. Events cover registration, login success/failure, logout, application submission/review, and club changes. Passwords, CSRF tokens, and session IDs are not logged.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 6 - Safe error handling and Winston audit log\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture the error handler, logger setup, a safe user-facing error, and a minimized structured log entry.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 6. Secure communication 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 The app can serve HTTPS directly when TLS key and certificate paths are set. A trusted reverse proxy can terminate TLS; TRUST_PROXY=1 is appropriate only behind a trusted proxy. The current local run is HTTP at 127.0.0.1:3000. The application does not enforce an HTTP-to-HTTPS redirect itself, so secure transport is not yet demonstrated for this local run.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 7 - HTTPS and Secure cookie configuration\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture only after a valid TLS certificate is configured: HTTPS address, certificate details, and Secure cookie attribute. Local HTTP is not HTTPS evidence.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Capture from the running application before final submission.\highlight0\par
+\pard\sb260\sa100\keepn\fs32\cf1\b 7. Security testing and auditing 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Evidence available: JavaScript syntax checks passed for server.js and public/app.js. The developer-provided console output shows /api/health returned HTTP 200 with ok=true. The PowerShell parsing warning was emitted by Invoke-WebRequest; it was followed by a successful 200 response. These checks do not verify login, authorization, injection handling, CSRF, rate limiting, or HTTPS.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 No OWASP ZAP scan or full penetration test is claimed. Complete Section G with actual results. GDPR, FERPA, and HIPAA compliance is not claimed; the institution must determine applicable rules and operational controls.\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 8 - Health endpoint response\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Insert a screenshot of the PowerShell output showing HTTP 200 and the JSON health response.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: User-provided console result: HTTP 200; not a security test.\highlight0\par
+\pard\sb100\sa120\brdrt\brdrl\brdrb\brdrr\brdrs\brdrw10\brdrcf2\highlight2\cf1\fs19\b FIGURE 9 - Security test results and fixes\b0\par\pard\li180\ri180\sa70\highlight2\cf0\fs18 Capture actual manual or OWASP ZAP results, date, finding, remediation, and retest.\par\pard\li180\ri180\sa100\highlight2\cf1\fs17 Evidence status: Not yet completed; do not present this slot as passing evidence.\highlight0\par
+\page
+\pard\sb260\sa100\keepn\fs32\cf1\b C. Component Breakdown\b0\cf0\fs20\par
+\pard\li180\ri180\sa75\fs18\cf0\b Authentication Register/login/logout; bcrypt cost 12, rate limit, generic error, session rotation. Code: server.js auth routes.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Authorization Session checks, student/admin RBAC, own-record scope. Code: auth/role middleware.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Student workspace Club browse/apply/status with escaped output. Code: public/app.js and /api routes.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Club management Admin-only create/edit, capacity, validation and audit. Code: /api/admin/clubs.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Membership workflow Unique application, pending-only decisions, reviewer/time audit, capacity check.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Data protection AES-GCM for selected PII; keyed HMAC email lookup; bcrypt password hash.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Validation and output Zod, request size limit, parameterized SQL, HTML escaping, CSP.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Session and CSRF SQLite session store, 30-minute rolling expiry, cookie flags, CSRF, logout invalidation.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Logging/errors Generic responses and Winston structured event logging.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Transport/audit Optional TLS, health endpoint, manual verification plan; local run remains HTTP.\b0  \par
+\page
+\pard\sb260\sa100\keepn\fs32\cf1\b D. Challenges and Solutions\b0\cf0\fs20\par
+\pard\li180\ri180\sa75\fs18\cf0\b Server startup failed because SESSION_SECRET was missing/short. The server showed a configuration validation error. A long secret was added to the project .env file.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b DATA_ENCRYPTION_KEY was still the example placeholder and had invalid length. The server rejected it at startup. A fresh 32-byte random key was generated and saved privately in .env.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b TLS path contained a value that was not a certificate file. Invalid TLS paths were cleared for local HTTP; HTTPS needs actual key and certificate files.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b The login page was reported unavailable although the service started. The health endpoint later returned 200, proving only API reachability. Browser login flow remains to be verified on your local browser.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b PowerShell showed a script parsing warning on the health check. The request still returned 200. -UseBasicParsing suppresses this legacy PowerShell warning.\b0  \par
+\pard\sb260\sa100\keepn\fs32\cf1\b E. Security Summary\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Confidentiality: bcrypt password hashes, AES-GCM selected identity fields, keyed HMAC lookup, and RBAC restrict access. HTTPS is required in deployment but is not active in the local run.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Integrity: server validation, prepared SQL, CSRF tokens, role authorization, unique application constraint, pending-only decisions, capacity checks, and audit logs protect records and decisions.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Availability: request-size limits, login rate limits, persistent SQLite storage, and safe error handling support reliable operation. Backups, monitoring, multi-instance storage, and recovery plans are not configured.\par
+\pard\sb260\sa100\keepn\fs32\cf1\b F. Repository and Submission Link\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Submission platform: VLE Moodle. GitLab URL or Google Drive ZIP link: not supplied. Add the actual repository or viewable Drive URL before submission; do not add an invented link.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Required naming pattern: ELE201_Dawa_12240028.zip and ELE201_Dawa_12240028.pdf. Exclude .env, database contents, sessions, and logs from a shared ZIP unless your instructor explicitly requests controlled demo data.\par
+\page
+\pard\sb260\sa100\keepn\fs32\cf1\b G. Security Verification Checklist\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Record the actual outcome after each check. Only the health endpoint and JavaScript syntax checks have evidence in this report.\par
+\pard\li180\ri180\sa75\fs18\cf0\b Health endpoint HTTP 200, ok=true \u226?\u8364?\u8221? confirmed from supplied PowerShell output.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Student calls admin API Expected 403 \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Signed-out application request Expected 401 \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Invalid registration/password Expected 400 safe validation response \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Duplicate club application Expected 409 and one row \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b SQLi-like input Expected to be treated as data \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b XSS-like text Expected to render as encoded text \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Missing/wrong CSRF token Expected 403 \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Logout then reuse session Expected 401 \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Repeated failed logins Expected rate limit \u226?\u8364?\u8221? not run.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b HTTPS deployment Not configured; local run uses HTTP.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Node syntax checks Passed for server.js and public/app.js.\b0  \par
+\pard\sb260\sa100\keepn\fs32\cf1\b Required Screenshot Captions 2\b0\cf0\fs20\par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 1 Secure student registration and login pages.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 2 bcrypt password hashing and server-side role-based access control.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 3 AES-GCM encrypted student information at rest; encryption key hidden.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 4 Server-side validation, prepared SQL, CSP, and output encoding.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 5 Session expiry, cookie flags, CSRF token, and logout invalidation.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 6 Safe error response and structured Winston log.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 7 HTTPS connection and Secure cookie, after TLS setup.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 8 PowerShell health endpoint response with HTTP 200.\b0  \par
+\pard\li180\ri180\sa75\fs18\cf0\b Figure 9 Security scan/manual test results and remediation notes.\b0  \par
+\pard\sa100\sl260\slmult1\fs20\cf0 For every figure, capture the real app or source in your environment, add an annotation, and explain what it demonstrates. Do not expose secrets or real student data. The figure boxes/captions in this report identify required evidence; they are not substitute screenshots.\par
+\pard\sb260\sa100\keepn\fs32\cf1\b Viva Preparation 2\b0\cf0\fs20\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Why bcrypt? It makes password guessing expensive and stores no plaintext password. Why AES-GCM? It encrypts selected PII and authenticates ciphertext against tampering. Why enforce roles on the API? Client controls can be bypassed, so each protected request must check the session role. What does CSRF protection do? It requires a session-bound unpredictable token for state-changing requests. Is local transport HTTPS? No; the local project uses HTTP. What tests are complete? Syntax checks and the reported health check only; the remaining matrix still needs to be run.\par
+\pard\sa100\sl260\slmult1\fs20\cf0 Final submission reminder: add real screenshots, actual security test results, and the repository/Drive link. Confirm your full name spelling in the filename before uploading to Moodle.\par
+}

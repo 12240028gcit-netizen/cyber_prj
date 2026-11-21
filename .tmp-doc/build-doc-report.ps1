@@ -1,0 +1,146 @@
+$ErrorActionPreference='Stop'
+$body=@'
+SECURE STUDENT CLUB REGISTRATION
+ELE201 SECURE CODING PROJECT DOCUMENTATION
+Individual Project and Security Implementation Report
+
+Student: Dawa
+Student ID: 12240028
+Course: ELE201 Secure Coding
+Date: 12 November 2026
+Local demonstration: http://127.0.0.1:3000
+
+Purpose of this report
+This report answers the ELE201 documentation requirements by describing the implemented application, mapping security controls to source code, and identifying evidence still needed. The PowerShell output supplied by the developer shows the local health endpoint returned HTTP 200. That confirms server reachability only; the login workflow and full security test set still need verification.
+
+A. APPLICATION OVERVIEW
+The Secure Student Club Registration and Membership Management System replaces informal club sign-up with a web workflow. Students register, sign in, browse clubs, submit membership applications, and view pending, approved, or rejected decisions. Club administrators review applications, approve or reject pending requests, create and edit club listings, set member capacity, and view approved members.
+
+The two roles are Student and Club Administrator. Students can browse clubs and access only their own applications. Administrators can review requests and maintain club information. Express checks authorization on the server for each restricted API route.
+
+Technologies: Node.js, Express, SQLite, HTML, CSS, browser JavaScript, bcryptjs, express-session with a SQLite store, Node crypto (AES-256-GCM and HMAC), Zod, Helmet, express-rate-limit, and Winston.
+
+Main features
+- Student registration, login, logout, club browsing, applications, and status tracking.
+- Administrator review, club creation and editing, capacity settings, and approved-member listing.
+- Encrypted student identity fields, server-side role checks, validated input, CSRF protection, session configuration, and structured security logs.
+
+Scope note: profile editing, password reset, email verification, per-club administrator assignment, automated backups, and production deployment are not implemented in this version.
+
+Cyber flow
+Browser -> Helmet and Express middleware -> session and CSRF checks -> Zod validation -> role authorization -> parameterized SQLite operation -> AES-GCM decryption only for an authorized administrator response -> safe JSON response -> escaped browser rendering. Winston records important events. Registration hashes passwords with bcrypt and encrypts student PII before storage. Login compares the bcrypt hash and rotates the session identifier.
+
+Local run configuration
+Install dependencies with npm install, keep .env private, and start with npm start. On the same computer, open http://127.0.0.1:3000. The health endpoint is http://127.0.0.1:3000/api/health. Local development uses HTTP and is not HTTPS evidence.
+
+B. SECURITY IMPLEMENTATION DETAILS
+1. Authentication and authorization
+Passwords are stored as bcrypt hashes using cost 12. Registration and login validate values on the server. Login uses a generic error for unknown email or incorrect password and is rate-limited. Successful registration and login regenerate the session ID. The auth middleware requires a signed-in session; the role middleware requires admin for admin endpoints. Student application queries are scoped to the session user.
+Code references: server.js registration/login handlers, bcrypt.hash and bcrypt.compare, auth and role middleware, /api/applications, and /api/admin routes. Passwords are not stored or logged in plaintext.
+FIGURE 1 - Registration and sign-in pages. Capture both forms in a browser using test data. Evidence to insert before submission.
+FIGURE 2 - bcrypt hashing and server-side RBAC. Capture the code and a student request to an admin endpoint returning 403. Evidence to insert before submission.
+
+2. Data encryption and protection
+Names, emails, and student IDs are encrypted with AES-256-GCM using a random 12-byte IV and an authentication tag. The 32-byte key is read from DATA_ENCRYPTION_KEY in .env. A keyed HMAC of normalized email supports lookup without a plaintext email index. Passwords use bcrypt. SQL values use bound parameters.
+Selected identity fields are encrypted at rest; this does not encrypt the entire SQLite file, logs, backups, or host filesystem. Losing the key makes those values unrecoverable. Key rotation requires migration. Never include secret values in screenshots or a repository.
+FIGURE 3 - AES-GCM protection at rest. Capture the encryption code and a database row showing ciphertext and a password hash. Redact the key and personal data. Evidence to insert before submission.
+
+3. Input validation and output sanitization
+Zod schemas enforce types, formats, length bounds, numeric ranges, and allowed status values on the server. Request bodies are limited to 20 KB. Prepared SQL statements prevent input from changing query structure. Browser code escapes HTML-significant characters before inserting dynamic text. Helmet CSP limits script and style sources to the local origin and blocks object embedding.
+HTML input constraints improve usability, but server validation is the security boundary. The project uses contextual HTML encoding in its render helper and does not include a separate DOMPurify package.
+FIGURE 4 - Validation, parameterized queries, CSP, and output encoding. Capture schemas, prepared SQL, the escape helper, and a safe invalid-input response. Evidence to insert before submission.
+
+4. Session management
+Sessions are stored in SQLite with a 30-minute rolling expiry. Login and registration regenerate the session identifier. Cookies use HttpOnly and SameSite=Strict. Secure is enabled when direct TLS is configured or NODE_ENV is production. State-changing routes require a random session-bound CSRF token. Logout destroys the server-side session and clears the cookie.
+The current local environment uses HTTP, so it does not demonstrate the Secure cookie attribute. Capture cookie flags only after using HTTPS.
+FIGURE 5 - Session expiry, cookie flags, CSRF, and logout. Capture session configuration, CSRF request, HTTPS cookie flags, and a logged-out request returning 401. Redact cookie values. Evidence to insert before submission.
+
+5. Error handling and logging
+Asynchronous route errors go to a central handler that returns a generic message instead of stack traces or database details. Winston writes timestamped JSON events to logs/security.log and the console. Events cover registration, login success/failure, logout, application submission/review, and club changes. Passwords, CSRF tokens, and session IDs are not logged.
+FIGURE 6 - Safe error response and Winston audit log. Capture the error handler, logger setup, a safe user-facing error, and a minimized log entry. Evidence to insert before submission.
+
+6. Secure communication
+The app can serve HTTPS directly when TLS key and certificate paths are set. A trusted reverse proxy can terminate TLS; TRUST_PROXY=1 is appropriate only behind a trusted proxy. The current local run is HTTP at 127.0.0.1:3000. The application does not enforce an HTTP-to-HTTPS redirect itself, so HTTPS is not yet demonstrated.
+FIGURE 7 - HTTPS and Secure cookie. Capture only after configuring a valid TLS certificate: HTTPS browser address, certificate details, and Secure cookie attribute. Local HTTP is not HTTPS evidence.
+
+7. Security testing and auditing
+Evidence available: JavaScript syntax checks passed for server.js and public/app.js. The supplied console output shows /api/health returned HTTP 200 with ok=true. The PowerShell script parsing warning was emitted by Invoke-WebRequest and was followed by a successful 200 response. These checks do not verify login, authorization, injection handling, CSRF, rate limiting, or HTTPS.
+No OWASP ZAP scan or full penetration test is claimed. Complete Section G with actual results. GDPR, FERPA, and HIPAA compliance is not claimed; the institution must determine applicable rules and operational controls.
+FIGURE 8 - Health endpoint response. Insert the PowerShell output showing HTTP 200 and the JSON health response. The output supplied during preparation reports this check succeeded.
+FIGURE 9 - Security test results and fixes. Capture actual manual or OWASP ZAP results, date, finding, remediation, and retest. Not yet completed; do not present this as passing evidence.
+
+C. COMPONENT BREAKDOWN
+Authentication: register/login/logout; bcrypt cost 12, rate limit, generic error, session rotation. Code: server.js auth routes.
+Authorization: session checks, student/admin RBAC, own-record scope. Code: auth and role middleware.
+Student workspace: club browse/apply/status with escaped output. Code: public/app.js and API routes.
+Club management: admin-only create/edit, capacity, validation, and audit. Code: /api/admin/clubs.
+Membership workflow: unique application, pending-only decisions, reviewer/time audit, capacity check.
+Data protection: AES-GCM selected PII; keyed HMAC email lookup; bcrypt password hash.
+Validation/output: Zod, request size limit, parameterized SQL, HTML escaping, CSP.
+Session/CSRF: SQLite store, 30-minute rolling expiry, cookie flags, CSRF, logout invalidation.
+Logging/errors: generic responses and Winston structured events.
+Transport/audit: optional TLS, health endpoint, manual verification plan; local run remains HTTP.
+
+D. CHALLENGES AND SOLUTIONS
+The server first refused to start because SESSION_SECRET was missing or too short. Node displayed a configuration error; a long random secret was set in .env.
+DATA_ENCRYPTION_KEY remained the example placeholder and had invalid length. The server rejected it; a fresh 32-byte random key was generated and saved privately in .env.
+TLS_KEY_PATH contained a value that was not a certificate file path. Invalid TLS paths were cleared for local HTTP; HTTPS needs actual key and certificate files.
+The login page was reported unavailable although the service started. The health endpoint later returned 200, proving only API reachability. Browser login flow remains to be verified on the local browser.
+PowerShell showed a script parsing warning on the health check. The request still returned 200; -UseBasicParsing suppresses this legacy PowerShell warning.
+
+E. SECURITY SUMMARY
+Confidentiality: bcrypt password hashes, AES-GCM selected identity fields, keyed HMAC lookup, and RBAC restrict access. HTTPS is required in deployment but is not active in the local run.
+Integrity: server validation, prepared SQL, CSRF tokens, role authorization, unique application constraint, pending-only decisions, capacity checks, and audit logs protect records and decisions.
+Availability: request-size limits, login rate limits, persistent SQLite storage, and safe error handling support reliable operation. Backups, monitoring, multi-instance storage, and recovery plans are not configured.
+
+F. REPOSITORY AND SUBMISSION LINK
+Submission platform: VLE Moodle. GitLab URL or Google Drive ZIP link was not supplied. Add the actual repository or viewable Drive URL before submission; do not invent a link.
+Required names: ELE201_Dawa_12240028.zip and ELE201_Dawa_12240028.pdf. Exclude .env, database contents, sessions, and logs from any shared ZIP unless controlled demo data is requested.
+
+G. SECURITY VERIFICATION CHECKLIST
+Health endpoint: expected HTTP 200 and ok=true. Result: confirmed from supplied PowerShell output.
+Student calls admin API: expected 403 Forbidden. Result: not run.
+Signed-out application request: expected 401 Unauthorized. Result: not run.
+Invalid registration/password: expected 400 safe validation response. Result: not run.
+Duplicate club application: expected 409 and no duplicate row. Result: not run.
+SQL injection-style input: expected to be treated as data. Result: not run.
+XSS-style text: expected to display as encoded text with no script execution. Result: not run.
+Missing/wrong CSRF token: expected 403. Result: not run.
+Logout then session reuse: expected 401. Result: not run.
+Repeated failed login: expected rate limit. Result: not run.
+HTTPS deployment: not configured; local run uses HTTP.
+JavaScript syntax checks: passed for server.js and public/app.js.
+
+Required screenshot captions
+Figure 1: Secure student registration and login pages.
+Figure 2: bcrypt password hashing and server-side role-based access control.
+Figure 3: AES-GCM encrypted student information at rest; key hidden.
+Figure 4: Server validation, prepared SQL, CSP, and output encoding.
+Figure 5: Session expiry, cookie attributes, CSRF token, and logout invalidation.
+Figure 6: Safe error response and structured Winston log.
+Figure 7: HTTPS connection and Secure cookie after TLS setup.
+Figure 8: PowerShell health endpoint response with HTTP 200.
+Figure 9: Security audit results and remediation notes.
+For each figure, capture the real application or source in your environment, annotate it, and explain what it demonstrates. Do not expose secrets or real student data. The captions in this report identify evidence still to insert and are not substitutes for screenshots.
+
+VIVA PREPARATION
+Why bcrypt? It makes password guessing expensive and stores no plaintext password. Why AES-GCM? It encrypts selected PII and authenticates ciphertext against tampering. Why enforce roles on the API? Client controls can be bypassed, so every protected request checks the session role. What does CSRF protection do? It requires a session-bound unpredictable token for state-changing requests. Is local transport HTTPS? No; local development uses HTTP. What tests are complete? Syntax checks and the reported health check only; the remaining matrix still needs to be run.
+
+Before submission, add actual screenshots, actual security test results, and the repository or Drive link. Confirm the full name spelling for the filename and upload the PDF to VLE Moodle.
+'@
+$outDoc=Join-Path (Get-Location) 'ELE201_Dawa_12240028.docx'
+$outPdf=Join-Path (Get-Location) 'ELE201_Dawa_12240028.pdf'
+$log=Join-Path (Get-Location) '.tmp-doc\word-progress.log'; Set-Content -LiteralPath $log -Value 'begin'
+$word=New-Object -ComObject Word.Application; $word.Visible=$false; $word.DisplayAlerts=0
+Add-Content -LiteralPath $log -Value 'word-started'
+$doc=$word.Documents.Add(); $doc.Content.Text=$body
+Add-Content -LiteralPath $log -Value 'body-assigned'
+$doc.Content.Font.Name='Arial'; $doc.Content.Font.Size=10
+Add-Content -LiteralPath $log -Value 'formatted'
+$doc.SaveAs2($outDoc,16); Add-Content -LiteralPath $log -Value 'saved-docx'
+$doc.ExportAsFixedFormat($outPdf,17); Add-Content -LiteralPath $log -Value 'exported-pdf'
+$pages=$doc.ComputeStatistics(2); $doc.Close(0); $word.Quit()
+[Runtime.InteropServices.Marshal]::ReleaseComObject($doc)|Out-Null; [Runtime.InteropServices.Marshal]::ReleaseComObject($word)|Out-Null
+"Created ELE201_Dawa_12240028.docx and ELE201_Dawa_12240028.pdf ($pages pages)."
+
+
